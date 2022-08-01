@@ -49,6 +49,11 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
+      env: {
+        API: ctx.dev
+          ? 'http://viladosilicio.com.br/wp-json/wp'
+          : 'http://viladosilicio.com.br/wp-json/wp'
+      },
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
       // transpile: false,
@@ -102,7 +107,9 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

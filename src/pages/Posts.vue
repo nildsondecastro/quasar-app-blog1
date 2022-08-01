@@ -48,12 +48,17 @@ export default {
   },
   methods: {
     getPosts () {
-      this.$axios.get('http://viladosilicio.com.br/wp-json/wp/v2/posts')
+      this.$q.loading.show({
+        delay: 400
+      })
+      this.$axios.get(`${process.env.API}/v2/posts`)
         .then((res) => {
           this.posts = res.data
+          this.$q.loading.hide()
           console.log('POSTS', res.data)
         })
         .catch((err) => {
+          this.$q.loading.hide()
           console.error(err)
         })
     }
