@@ -1,15 +1,15 @@
 <template>
   <q-page class="container q-pa-xs">
     <div class="row q-gutter-md">
-      <div class="col-xs-12 col-sm-3" v-for="artigo in 10" :key="artigo">
+      <div class="col-xs-12 col-sm-3" v-for="(post, index) in posts" :key="index">
         <q-card class="my-card">
-          <q-img src="~assets/quasar-logo-vertical.svg" />
+          <q-img :src="post.jetpack_featured_media_url" />
 
           <q-card-section>
 
             <div class="row no-wrap items-center">
               <div class="col text-h6 ellipsis">
-                Título
+                {{ post.title.rendered}}
               </div>
             </div>
 
@@ -17,7 +17,7 @@
 
           <q-card-section class="q-pt-none">
             <div class="text-subtitle1">
-              resumo
+              resumo ...
             </div>
           </q-card-section>
 
@@ -37,6 +37,26 @@
 
 <script>
 export default {
-  name: 'Posts'
+  name: 'Posts',
+  data () {
+    return {
+      posts: []
+    }
+  },
+  mounted () {
+    this.getPosts()
+  },
+  methods: {
+    getPosts () {
+      this.$axios.get('http://viladosilicio.com.br/wp-json/wp/v2/posts')
+        .then((res) => {
+          this.posts = res.data
+          console.log('POSTS', res.data)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    }
+  }
 }
 </script>
